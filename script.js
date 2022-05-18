@@ -46,6 +46,11 @@ function ultimeCompareCoord(a, b) {
     
 }
 
+function getCoordFromStyle(robot) {
+    let coordX = parseInt((robot.style.left).substring(0, robot.style.left.length-2));
+    let coordY = parseInt((robot.style.top ).substring(0, robot.style.top .length-2));
+    return new Array(coordX, coordY);
+}
 
 
 function getPositionToGo(robot) {
@@ -106,12 +111,21 @@ function getPositionToGo(robot) {
     robot.style.height = "50px";
     robot.style.width  = "50px";
     robot.style.border = "5px solid yellow";
+
+
     tempListRobots[newTempX[0][0]].style.height = "50px";
     tempListRobots[newTempX[0][0]].style.width  = "50px";
+
     tempListRobots[newTempX[1][0]].style.height = "50px";
     tempListRobots[newTempX[1][0]].style.width  = "50px";
-    tempListRobots[newTempX[0][0]].style.height = "50px";
-    tempListRobots[newTempX[0][0]].style.width  = "50px";
+
+
+    let targetX = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[0]
+                 + getCoordFromStyle(tempListRobots[newTempX[1][0]])[0] ) / 2;
+
+    let targetY = null;
+
+    return new Array (targetX, targetY);
 }
 
 // init
