@@ -1,0 +1,22 @@
+body {
+    background:#333333;
+    margin:0px;
+    padding:0px;
+  }
+  
+  .robot {
+    height:15px;
+    width:15px;
+    border-radius:50%;
+    position:absolute;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+  
+  
+  #bleu   {background-color:blue  }
+  #yellow {background-color:yellow}
+  #red    {background-color:red   }
+  #green  {background-color:green }
+  #white  {background-color:white }
+  #orange {background-color:orange}
+  #brown {background-color:brown}
