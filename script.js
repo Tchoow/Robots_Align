@@ -4,7 +4,7 @@ let robots = document.querySelectorAll(".robot");
 // init
 function initPositionRobots() {
     for (let r of robots) {
-        let top = Math.floor(Math.random() * window.innerHeight - 50) + 25;
+        let top  = Math.floor(Math.random() * window.innerHeight - 50) + 25;
         let left = Math.floor(Math.random() * window.innerWidth - 50) + 25;
         r.style.left = left + "px"
         r.style.top = top + "px"
@@ -15,15 +15,11 @@ function initPositionRobots() {
 function getRobotPosition(robot) {
     let coords = []
     coords[0] = (robot.style.left).substring(0, robot.style.left.length - 2);
-    coords[1] = (robot.style.top).substring(0, robot.style.top.length - 2);
+    coords[1] = (robot.style.top) .substring(0, robot.style.top.length - 2);
     return coords;
 }
 
-// sleep delay
-function sleep(delay) {
-    var start = new Date().getTime();
-    while (new Date().getTime() < start + delay);
-}
+
 
 //function delete current robot from array
 function deleteRobotFromListOfRobot(robot, lstRobot) {
@@ -37,7 +33,7 @@ function deleteRobotFromListOfRobot(robot, lstRobot) {
 
 function compareCoord(a, b) {
     if (a[1] < b[1]) { return -1; }
-    if (a[1] > b[1]) { return 1; }
+    if (a[1] > b[1]) { return 1;  }
     return 0;
 }
 
@@ -55,11 +51,11 @@ function getCoordFromStyle(robot) {
 function goToPosition(robot, targetX, targetY) {
     let currentCoord = getCoordFromStyle(robot);
 
-    if (targetX < currentCoord[0]) robot.style.left = (currentCoord[0]-1) + "px"
-    else robot.style.left = (currentCoord[0]+1) + "px"
+    if (Math.round(targetX) < currentCoord[0]) robot.style.left = (currentCoord[0]-1)      + "px"
+    else if (Math.round(targetX) > currentCoord[0]) robot.style.left = (currentCoord[0]+1) + "px"
 
-    if (targetY < currentCoord[1]) robot.style.top = (currentCoord[1]-1) + "px"
-    else robot.style.top = (currentCoord[0]+1) + "px"
+    if (Math.round(targetY) < currentCoord[1]) robot.style.top = (currentCoord[1]-1)       + "px"
+    else if (Math.round(targetY) > currentCoord[1]) robot.style.top = (currentCoord[1]+1)  + "px"
 }
 
 
@@ -135,45 +131,46 @@ function getPositionToGo(robot) {
     let targetY = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[1]
     + getCoordFromStyle(tempListRobots[newTempX[1][0]])[1] ) / 2;
 
-    return new Array (targetX, targetY);
+    return new Array (Math.round(targetX), Math.round(targetY));
 }
 
 // init
 initPositionRobots();
-//console.log(getPositionToGo(robots[0]));
-
 /*
-for(let rob of robots) {
-    setInterval(
-        function(){
-
-        }
-    , 1000);
-}
+targetCoordXY = getPositionToGo(robots[0]);
+console.log(getCoordFromStyle(robots[0]))
+console.log(targetCoordXY);
+goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
+console.log("===")
+targetCoordXY = getPositionToGo(robots[0]);
+console.log(getCoordFromStyle(robots[0]))
+console.log(targetCoordXY);
+goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
+console.log("===")
+targetCoordXY = getPositionToGo(robots[0]);
+console.log(getCoordFromStyle(robots[0]))
+console.log(targetCoordXY);
+goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
+console.log("===")
+targetCoordXY = getPositionToGo(robots[0]);
+console.log(getCoordFromStyle(robots[0]))
+console.log(targetCoordXY);
+goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
 */
 
 
 
-/*
-for (let i = 1; i < 10; i++) {
-    setTimeout(function timer() {
-      for (let rob of robots) {
-        let targetCoordXY = getPositionToGo(rob);
-        goToPosition(rob, targetCoordXY[0], targetCoordXY[1]);
-      }
-    }, i * 500);
-  }
-*/
+
 let targetCoordXY;
 
-for (let y = 1; y < 200; y++) {
+for (let y = 1; y < 2000; y++) {
     setTimeout(function timer() {
         for (let i = 0; i < robots.length; i++) {
             setTimeout(function timer() {
                 targetCoordXY = getPositionToGo(robots[i]);
                 goToPosition(robots[i], targetCoordXY[0], targetCoordXY[1]);
-            }, i * 200);
+            }, i * 20);
         }
-    }, y * 1000);
+    }, y * 20);
 }
 
