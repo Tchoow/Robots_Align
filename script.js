@@ -52,6 +52,16 @@ function getCoordFromStyle(robot) {
     return new Array(coordX, coordY);
 }
 
+function goToPosition(robot, targetX, targetY) {
+    let currentCoord = getCoordFromStyle(robot);
+
+    if (targetX < currentCoord[0]) robot.style.left = (currentCoord[0]-1) + "px"
+    else robot.style.left = (currentCoord[0]+1) + "px"
+
+    if (targetY < currentCoord[1]) robot.style.top = (currentCoord[1]-1) + "px"
+    else robot.style.top = (currentCoord[0]+1) + "px"
+}
+
 
 function getPositionToGo(robot) {
 
@@ -105,9 +115,8 @@ function getPositionToGo(robot) {
     }
 
     //newTempXY.sort(ultimeCompareCoord);
-
-    console.log(newTempXY);
     
+    /*
     robot.style.height = "50px";
     robot.style.width  = "50px";
     robot.style.border = "5px solid yellow";
@@ -118,16 +127,53 @@ function getPositionToGo(robot) {
 
     tempListRobots[newTempX[1][0]].style.height = "50px";
     tempListRobots[newTempX[1][0]].style.width  = "50px";
-
+    */
 
     let targetX = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[0]
                  + getCoordFromStyle(tempListRobots[newTempX[1][0]])[0] ) / 2;
 
-    let targetY = null;
+    let targetY = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[1]
+    + getCoordFromStyle(tempListRobots[newTempX[1][0]])[1] ) / 2;
 
     return new Array (targetX, targetY);
 }
 
 // init
 initPositionRobots();
-getPositionToGo(robots[0]);
+//console.log(getPositionToGo(robots[0]));
+
+/*
+for(let rob of robots) {
+    setInterval(
+        function(){
+
+        }
+    , 1000);
+}
+*/
+
+
+
+/*
+for (let i = 1; i < 10; i++) {
+    setTimeout(function timer() {
+      for (let rob of robots) {
+        let targetCoordXY = getPositionToGo(rob);
+        goToPosition(rob, targetCoordXY[0], targetCoordXY[1]);
+      }
+    }, i * 500);
+  }
+*/
+let targetCoordXY;
+
+for (let y = 1; y < 200; y++) {
+    setTimeout(function timer() {
+        for (let i = 0; i < robots.length; i++) {
+            setTimeout(function timer() {
+                targetCoordXY = getPositionToGo(robots[i]);
+                goToPosition(robots[i], targetCoordXY[0], targetCoordXY[1]);
+            }, i * 200);
+        }
+    }, y * 1000);
+}
+
