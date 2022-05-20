@@ -51,11 +51,50 @@ function getCoordFromStyle(robot) {
 function goToPosition(robot, targetX, targetY) {
     let currentCoord = getCoordFromStyle(robot);
 
-    if (Math.round(targetX) < currentCoord[0]) robot.style.left = (currentCoord[0]-1)      + "px"
-    else if (Math.round(targetX) > currentCoord[0]) robot.style.left = (currentCoord[0]+1) + "px"
+    /*
+    if ((Math.round(targetX) - currentCoord[0]-Math.random(35)) != 0 || (Math.round(targetY) - currentCoord[1]) != 0 ) {
 
-    if (Math.round(targetY) < currentCoord[1]) robot.style.top = (currentCoord[1]-1)       + "px"
-    else if (Math.round(targetY) > currentCoord[1]) robot.style.top = (currentCoord[1]+1)  + "px"
+
+
+    }
+    */
+
+    //console.log(">" + Math.round(targetX) );
+    //console.log(";" + currentCoord[0]);
+    
+
+
+    if ((Math.round(targetY) - currentCoord[1]) != 0)
+    {
+        if      (Math.round(targetX) < currentCoord[0]) robot.style.left = (currentCoord[0]-1) + "px"
+        else if (Math.round(targetX) > currentCoord[0]) robot.style.left = (currentCoord[0]+1) + "px"
+    }
+
+    if ((Math.round(targetX) - currentCoord[0]) != 0)
+    {
+        if      (Math.round(targetY) < currentCoord[1]) robot.style.top = (currentCoord[1]-1)  + "px"
+        else if (Math.round(targetY) > currentCoord[1]) robot.style.top = (currentCoord[1]+1)  + "px"
+    }
+    else
+    {
+        if      (Math.round(targetY) < currentCoord[1]) robot.style.top = (currentCoord[1]-1)  + "px"
+        else if (Math.round(targetY) > currentCoord[1]) robot.style.top = (currentCoord[1]+1)  + "px"
+    }
+
+
+
+}
+
+function rotateRobot(robot) {
+    var rotate = robot.style.transform;
+    if (rotate == "") {
+        robot.style.transform =  "rotate(" + 1 + "deg)";
+    }
+    else {
+        let angle = rotate.replace(/[^0-9]/g, "");
+        robot.style.transform =  "rotate(" + (angle+1) + "deg)";
+    }
+    
 }
 
 
@@ -125,52 +164,58 @@ function getPositionToGo(robot) {
     tempListRobots[newTempX[1][0]].style.width  = "50px";
     */
 
+    /*
     let targetX = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[0]
-                 + getCoordFromStyle(tempListRobots[newTempX[1][0]])[0] ) / 2;
+                 + getCoordFromStyle(tempListRobots[newTempX[1][0]])[0]
+                 + getCoordFromStyle(tempListRobots[newTempX[2][0]])[0] / 3);
+    */
 
+    
+    let targetX = 0;
+
+    for (let rob of tempListRobots) {
+        targetX += getCoordFromStyle(rob)[0];
+    }
+    targetX /= tempListRobots.length;
+    
+    /*
+    
     let targetY = (getCoordFromStyle(tempListRobots[newTempX[0][0]])[1]
-    + getCoordFromStyle(tempListRobots[newTempX[1][0]])[1] ) / 2;
+                 + getCoordFromStyle(tempListRobots[newTempX[1][0]])[1]
+                 + getCoordFromStyle(tempListRobots[newTempX[2][0]])[1]) / 3;
+
+    */
+
+    let targetY = 0;
+    for (let rob of tempListRobots) {
+        targetY += getCoordFromStyle(rob)[1];
+    }
+
+
+    targetY /= tempListRobots.length;
 
     return new Array (Math.round(targetX), Math.round(targetY));
 }
 
 // init
-initPositionRobots();
-/*
-targetCoordXY = getPositionToGo(robots[0]);
-console.log(getCoordFromStyle(robots[0]))
-console.log(targetCoordXY);
-goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
-console.log("===")
-targetCoordXY = getPositionToGo(robots[0]);
-console.log(getCoordFromStyle(robots[0]))
-console.log(targetCoordXY);
-goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
-console.log("===")
-targetCoordXY = getPositionToGo(robots[0]);
-console.log(getCoordFromStyle(robots[0]))
-console.log(targetCoordXY);
-goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
-console.log("===")
-targetCoordXY = getPositionToGo(robots[0]);
-console.log(getCoordFromStyle(robots[0]))
-console.log(targetCoordXY);
-goToPosition(robots[0], targetCoordXY[0], targetCoordXY[1]);
-*/
+function initProject() {
+    initPositionRobots();
 
 
-
-
-let targetCoordXY;
-
-for (let y = 1; y < 2000; y++) {
-    setTimeout(function timer() {
-        for (let i = 0; i < robots.length; i++) {
-            setTimeout(function timer() {
-                targetCoordXY = getPositionToGo(robots[i]);
-                goToPosition(robots[i], targetCoordXY[0], targetCoordXY[1]);
-            }, i * 20);
-        }
-    }, y * 20);
+    let targetCoordXY;
+    
+    for (let y = 1; y < 2000; y++) {
+        setTimeout(function timer() {
+            for (let i = 0; i < robots.length; i++) {
+                setTimeout(function timer() {
+                    targetCoordXY = getPositionToGo(robots[i]);
+                    goToPosition(robots[i], targetCoordXY[0], targetCoordXY[1]);
+                    rotateRobot(robots[i])
+                }, i * 5);
+            }
+        }, y * 5);
+    }
 }
 
+
+initProject();

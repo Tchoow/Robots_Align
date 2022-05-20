@@ -5,19 +5,44 @@ body {
   }
   
   .robot {
-    height:15px;
-    width:15px;
-    border-radius:50%;
+    height:25px;
+    width:25px;
     position:absolute;
+    background:rgba(255, 255, 255, 0.154);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    outline: 1px solid #fff
+    outline: 1px solid #ff1744
   }
+
+#retry {
+  position:absolute;
+  left:10%;
+  top:10%;
+  padding-left: 60px;
+  padding-right: 60px;
+  padding: 15px;
+  border: #ff1744 1px solid;
+  border-radius: 7px;
+  background:#484848;
+  color:#fff;
+  font-size: 35px;
+  font-weight: 500;
+  transition: all ease .3s;
+}
+
+#retry:before {
+  content:'Roboline';
+  position:absolute;
+  top:-69%;
+  left:0px;
+  background:#ff174548;
+  border-radius: 7px;
+  padding:5px;
+  width:100%
+}
+
+#retry:hover{
+  background:#ff1744;
+  cursor:pointer;
+  transform:rotate(5deg)
+}
   
-  
-  #bleu   {background-color:blue  }
-  #yellow {background-color:yellow}
-  #red    {background-color:red   }
-  #green  {background-color:green }
-  #white  {background-color:white }
-  #orange {background-color:orange}
-  #brown {background-color:brown}
